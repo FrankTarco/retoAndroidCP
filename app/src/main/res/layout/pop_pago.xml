@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#B6B6B6">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/popup_bg"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Completar para la compra"
+            android:fontFamily="sans-serif-black"
+            android:textSize="25sp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/candy_store" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Numero de tarjeta"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:textColorHint="@color/material_dynamic_neutral40"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:id="@+id/txtNumeroTarjeta" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="Fecha Expiración"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textColorHint="@color/material_dynamic_neutral40"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:padding="18dp"
+                android:inputType="text"
+                android:id="@+id/txtFechaExpliracion" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CVV"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textColorHint="@color/material_dynamic_neutral40"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:padding="18dp"
+                android:inputType="text"
+                android:id="@+id/txtCvv" />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electronico"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:textColorHint="@color/material_dynamic_neutral40"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:id="@+id/txtCorreoElectronico" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre completo"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:textColorHint="@color/material_dynamic_neutral40"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:id="@+id/txtNombre" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de documento"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:textColorHint="@color/material_dynamic_neutral40"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:id="@+id/txtTipoDoc" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="N° Documento"
+            android:textColor="@color/material_dynamic_neutral40"
+            android:textColorHint="@color/material_dynamic_neutral40"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="18dp"
+            android:inputType="text"
+            android:id="@+id/txtDocumento" />
+
+        <Button
+            android:id="@+id/btnTerminarCompra"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#DD014C"
+            android:layout_marginTop="10dp"
+            android:text="Finalizar Compra"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnCancelarCompra"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#DD014C"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Finalizar Compra"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

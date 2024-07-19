@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:padding="16dp"
     tools:context=".LoginFragment">
@@ -15,57 +16,30 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:src="@android:mipmap/sym_def_app_icon" />
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/candy_store" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesion con google"
+            android:text="Para continuar puede"
+            android:fontFamily="sans-serif-black"
             android:textSize="18sp"
             android:layout_marginTop="32dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username"
-            android:textColor="@color/material_dynamic_neutral40"
-            android:textColorHint="@color/material_dynamic_neutral40"
-            android:textSize="20sp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_courner"
-            android:padding="18dp"
-            android:inputType="text"
-            android:id="@+id/txtUsername" />
 
-        <EditText
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:textColor="@color/material_dynamic_neutral40"
-            android:textColorHint="@color/material_dynamic_neutral40"
-            android:textSize="20sp"
-            android:background="@drawable/rounded_courner"
-            android:layout_marginTop="16dp"
-            android:padding="18dp"
-            android:inputType="textPassword"
-            android:id="@+id/txtClave" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Iniciar sesion"
-            android:padding="18dp"
-            android:layout_marginTop="32dp"
-            android:textSize="20sp"
-            android:id="@+id/btnIniciarSesion" />
+            android:layout_gravity="center" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingresar como invitado"
-            android:backgroundTint="@color/material_dynamic_neutral80"
+            android:backgroundTint="#E91E63"
             android:padding="18dp"
             android:layout_marginTop="10dp"
             android:textSize="20sp"

@@ -1,9 +1,9 @@
 package com.example.proyectotrabajo;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.proyectotrabajo.entity.Premier;
 import com.example.proyectotrabajo.entity.Premieres;
-import com.example.proyectotrabajo.service.OnPremiseLoaderListener;
 import com.example.proyectotrabajo.service.PremierService;
 import com.example.proyectotrabajo.util.ConnectionRest;
 
@@ -78,31 +78,37 @@ public class HomeFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ImageSlider imageSlider = view.findViewById(R.id.image_slider);
-
-        // Create image list
-       // ArrayList<SlideModel> imageList = new ArrayList<>();
-       // imageList.add(new SlideModel("https://bit.ly/2YoJ77H", "The animal population decreased by 58 percent in 42 years.",ScaleTypes.CENTER_CROP));
-       // imageList.add(new SlideModel("https://bit.ly/2BteuF2", "Elephants and tigers may become extinct.",ScaleTypes.CENTER_CROP));
-       // imageList.add(new SlideModel("https://bit.ly/3fLJf72", "And people do that.",ScaleTypes.CENTER_CROP));
-
-        // Set the image list to the ImageSlider
-       // imageSlider.setImageList(imageList);
-
-        //service = ConnectionRest.getConnection().create(PremierService.class);
-        // Inflate the layout for this fragment
-        listar();
+        imageSlider = view.findViewById(R.id.image_slider);
+        listaImagenes();
         return view;
     }
 
-    private void listar(){
+    private void listaImagenes(){
         Call<Premieres> call = service.listarPremieres();
         call.enqueue(new Callback<Premieres>() {
             @Override
             public void onResponse(Call<Premieres> call, Response<Premieres> response) {
                 if(response.isSuccessful()){
                     lstPremieres = response.body();
-                    mensajeToastShort(lstPremieres.getPremieres().get(0).getDescription());
+                    if(lstPremieres != null && lstPremieres.getPremieres() != null ){
+                        ArrayList<SlideModel> imageList = new ArrayList<>();
+                        for(Premier bean: lstPremieres.getPremieres()){
+                            imageList.add(new SlideModel(bean.getImage(), bean.getDescription(),ScaleTypes.CENTER_CROP));
+                        }
+                        imageSlider.setImageList(imageList);
+
+                        imageSlider.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onItemSelected(int i) {
+                                reemplazarFragment(new LoginFragment());
+                            }
+
+                            @Override
+                            public void doubleClick(int i) {
+
+                            }
+                        });
+                    }
                 }
             }
 
@@ -111,6 +117,13 @@ public class HomeFragment extends Fragment{
                 mensajeToastShort("No se ingreso");
             }
         });
+    }
+
+    private void reemplazarFragment(Fragment f){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,f);
+        fragmentTransaction.commit();
     }
 
     public void mensajeToastShort(String msg){

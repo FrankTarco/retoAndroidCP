@@ -1,5 +1,6 @@
 package com.example.proyectotrabajo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.proyectotrabajo.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,20 +30,28 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
            if(R.id.home == item.getItemId()){
-               mensajeAlert("Entro al home");
                reemplazarFragment(new HomeFragment());
            }
            else if(R.id.dulceria == item.getItemId()){
-               mensajeAlert("Entro al dulceria");
                reemplazarFragment(new DulceriaFragment());
            }
            else{
-               mensajeAlert("Entro al login");
                reemplazarFragment(new LoginFragment());
            }
             return true;
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        FirebaseAuth.getInstance().signOut();
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
     }
 
     private void reemplazarFragment(Fragment f){

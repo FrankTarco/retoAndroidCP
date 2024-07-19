@@ -1,15 +1,22 @@
 package com.example.proyectotrabajo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +84,14 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
 
         listado();
         updateTotalAmount();
+
+        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirPagar(v);
+            }
+        });
+
         return view;
     }
 
@@ -125,6 +140,61 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
             }
         }
         total.setText(String.valueOf("Total a pagar: "+ totalAmount));
+    }
+
+    private void abrirPagar(View anchorView){
+        LayoutInflater inflater = getLayoutInflater(); // Use getLayoutInflater() instead
+        View popupView = inflater.inflate(R.layout.pop_pago, null);
+
+        final PopupWindow popupWindow = new PopupWindow(popupView,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,true);
+
+        //TOMAR DATOS
+        EditText txtTarjeta = popupView.findViewById(R.id.txtNumeroTarjeta);
+        EditText txtFechaExpi = popupView.findViewById(R.id.txtFechaExpliracion);
+        EditText txtCvv = popupView.findViewById(R.id.txtCvv);
+        EditText txtEmail = popupView.findViewById(R.id.txtCorreoElectronico);
+        EditText txtNombre = popupView.findViewById(R.id.txtNombre);
+        EditText txtTipoDocumento = popupView.findViewById(R.id.txtTipoDoc);
+        EditText txtDocumento = popupView.findViewById(R.id.txtDocumento);
+        Button btnTerminarPago = popupView.findViewById(R.id.btnTerminarCompra);
+        Button btnCancelar = popupView.findViewById(R.id.btnCancelarCompra);
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String userName = prefs.getString("userName", "");
+        String userEmail = prefs.getString("userEmail", "");
+
+        txtNombre.setText(userName);
+        txtEmail.setText(userEmail);
+
+        btnTerminarPago.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tarjeta,fechaEx,cvv,email,nombre,tipoDoc,doc;
+                tarjeta = txtTarjeta.getText().toString();
+                fechaEx = txtFechaExpi.getText().toString();
+                cvv = txtCvv.getText().toString();
+                email = txtEmail.getText().toString();
+                nombre = txtNombre.getText().toString();
+                tipoDoc = txtTipoDocumento.getText().toString();
+                doc = txtDocumento.getText().toString();
+
+                mensajeToastShort("Se recepciondo datos:" + tarjeta+fechaEx+cvv+email+nombre+tipoDoc+doc);
+                popupWindow.dismiss();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); // To make outside touches work
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +14,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,9 @@ import com.example.proyectotrabajo.entity.Candy;
 import com.example.proyectotrabajo.entity.Items;
 import com.example.proyectotrabajo.service.CandyStoreService;
 import com.example.proyectotrabajo.util.ConnectionRest;
+import com.example.proyectotrabajo.util.ValidacionUtil;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,6 +77,8 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     Button btnFinalizar;
     RecyclerView recicler;
     TextView total;
+
+    double totalAmount = 0.0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,22 +132,30 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    public void mensajeAlert(String msg){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireActivity());
+        alertDialog.setMessage(msg);
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+    }
+
     @Override
     public void onQuantityChanged() {
         updateTotalAmount();
-        mensajeToastShort("Se esta modificando el listener");
     }
 
     private void updateTotalAmount() {
-        double totalAmount = 0.0;
+
+        double monto = 0.0;
         if (lista != null && lista.getItems() != null) {
             for (Candy bean : lista.getItems()) {
-                if (bean != null) { // Verifica si bean no es null
-                    totalAmount += bean.getTotalPrice(); // Asumiendo que getTotalPrice() está definido en Candy
+                if (bean != null) {
+                    monto += bean.getTotalPrice();
                 }
             }
         }
-        total.setText(String.valueOf("Total a pagar: "+ totalAmount));
+        totalAmount = monto;
+        total.setText(String.valueOf("Total a pagar: "+ monto));
     }
 
     private void abrirPagar(View anchorView){
@@ -156,7 +172,19 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
         EditText txtCvv = popupView.findViewById(R.id.txtCvv);
         EditText txtEmail = popupView.findViewById(R.id.txtCorreoElectronico);
         EditText txtNombre = popupView.findViewById(R.id.txtNombre);
-        EditText txtTipoDocumento = popupView.findViewById(R.id.txtTipoDoc);
+        Spinner spnTipoDoc = popupView.findViewById(R.id.txtTipoDoc);
+        TextView tvTitle = popupView.findViewById(R.id.tvCompraTitle);
+
+        tvTitle.setText("Su monto a pagar es S/" + totalAmount);
+
+        ArrayList<String> tipos = new ArrayList<>();
+        tipos.add("DNI");
+        tipos.add("CC.EE");
+        tipos.add("OTROS");
+        ArrayAdapter<String> adaptadorTipoDoc = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tipos);
+        adaptadorTipoDoc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTipoDoc.setAdapter(adaptadorTipoDoc);
+
         EditText txtDocumento = popupView.findViewById(R.id.txtDocumento);
         Button btnTerminarPago = popupView.findViewById(R.id.btnTerminarCompra);
         Button btnCancelar = popupView.findViewById(R.id.btnCancelarCompra);
@@ -177,11 +205,32 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
                 cvv = txtCvv.getText().toString();
                 email = txtEmail.getText().toString();
                 nombre = txtNombre.getText().toString();
-                tipoDoc = txtTipoDocumento.getText().toString();
+                tipoDoc = spnTipoDoc.getSelectedItem().toString();
                 doc = txtDocumento.getText().toString();
 
-                mensajeToastShort("Se recepciondo datos:" + tarjeta+fechaEx+cvv+email+nombre+tipoDoc+doc);
-                popupWindow.dismiss();
+                if(!tarjeta.matches(ValidacionUtil.TARJETA)){
+                    mensajeAlert("LA TARJETA DEBE TENER 16 DIGITOS");
+                }
+                else if(!fechaEx.matches(ValidacionUtil.FECHAVENCIMIENTO)){
+                    mensajeAlert("El formato es MM/dd");
+                }
+                else if(!cvv.matches(ValidacionUtil.CVV)){
+                    mensajeAlert("SOLO 3 DIGITOS");
+                }
+                else if(!email.matches(ValidacionUtil.CORREO)){
+                    mensajeAlert("El formato del correo debe ser correcto");
+                }
+                else if(!nombre.matches(ValidacionUtil.NOMBRES)){
+                    mensajeAlert("El nombre debe ser de 3 a 60 caracteres");
+                }
+                else if(!doc.matches(ValidacionUtil.DNI)){
+                    mensajeAlert("EL DNI debe tener 8 digitos");
+                }
+                else{
+                    mensajeAlert(tipoDoc);
+                    popupWindow.dismiss();
+                }
+
             }
         });
 

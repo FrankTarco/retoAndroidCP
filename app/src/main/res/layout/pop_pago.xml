@@ -17,6 +17,7 @@
         android:layout_margin="20dp">
 
         <TextView
+            android:id="@+id/tvCompraTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Completar para la compra"
@@ -24,7 +25,8 @@
             android:textSize="25sp"
             android:padding="10dp"
             android:textStyle="bold"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            />
 
         <ImageView
             android:layout_width="match_parent"
@@ -106,18 +108,15 @@
             android:inputType="text"
             android:id="@+id/txtNombre" />
 
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tipo de documento"
             android:textColor="@color/material_dynamic_neutral40"
-            android:textColorHint="@color/material_dynamic_neutral40"
             android:textSize="20sp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:padding="18dp"
-            android:inputType="text"
             android:id="@+id/txtTipoDoc" />
 
         <EditText
@@ -133,7 +132,6 @@
             android:padding="18dp"
             android:inputType="text"
             android:id="@+id/txtDocumento" />
-
         <Button
             android:id="@+id/btnTerminarCompra"
             android:layout_width="250dp"
@@ -146,6 +144,7 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+
         <Button
             android:id="@+id/btnCancelarCompra"
             android:layout_width="250dp"
@@ -154,7 +153,7 @@
             android:backgroundTint="#DD014C"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Finalizar Compra"
+            android:text="Cancelar compra"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />

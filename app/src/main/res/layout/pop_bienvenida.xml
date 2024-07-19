@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#A1A1A1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/popup_bg"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bienvenido a CandyStore"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-black" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/candy_store" />
+
+            <TextView
+                android:id="@+id/tvUsuarioLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-black"
+                android:textSize="16dp"
+                android:padding="20dp"
+                android:text="Usuario" />
+
+            <Button
+                android:id="@+id/btnLoginAvanzar"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#DD014C"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="15dp"
+                android:text="Aceptar"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -1,10 +1,12 @@
 package com.example.proyectotrabajo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -88,7 +90,6 @@ public class LoginFragment extends Fragment {
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mensajeToastShort("Selecciono google");
                 signIn();
             }
         });
@@ -96,7 +97,7 @@ public class LoginFragment extends Fragment {
         btnInvitado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reemplazarFragment(new HomeFragment());
+                reemplazarFragment(new DulceriaFragment());
             }
         });
 
@@ -141,9 +142,9 @@ public class LoginFragment extends Fragment {
                             editor.putString("userName", userName);
                             editor.putString("userEmail", userEmail);
                             editor.apply();
-                            mensajeToastShort("Iniciaste sesion "+userName);
+                            mensajeAlert("Bienvenido al sistema \n "+ userName);
 
-                            reemplazarFragment(new DulceriaFragment());
+                            //reemplazarFragment(new DulceriaFragment());
                         }
                     }
                 });
@@ -154,6 +155,20 @@ public class LoginFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,f);
         fragmentTransaction.commit();
+    }
+
+    public void mensajeAlert(String msg){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireActivity());
+        alertDialog.setMessage(msg);
+        alertDialog.setCancelable(true);
+        alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                reemplazarFragment(new DulceriaFragment());
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     public void mensajeToastShort(String msg){

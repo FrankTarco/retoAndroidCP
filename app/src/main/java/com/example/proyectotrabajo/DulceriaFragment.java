@@ -1,5 +1,6 @@
 package com.example.proyectotrabajo;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -84,6 +85,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     RecyclerView recicler;
     TextView total;
     Respuesta objRespuesta;
+    Dialog dialog;
 
     double totalAmount = 0.0;
 
@@ -139,6 +141,30 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    public void showConfirmation(String msg,String title){
+        dialog = new Dialog(requireActivity());
+        dialog.setContentView(R.layout.pop_bienvenida);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        TextView txtNombrePop = dialog.findViewById(R.id.tvUsuarioLogin);
+        TextView txtTitlePop = dialog.findViewById(R.id.tvTitleLogin);
+        Button btnAceptarPop = dialog.findViewById(R.id.btnLoginAvanzar);
+
+        txtNombrePop.setText(msg);
+        txtTitlePop.setText(title);
+        btnAceptarPop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+
     public void mensajeAlert(String msg){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireActivity());
         alertDialog.setMessage(msg);
@@ -166,7 +192,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     }
 
     private void abrirPagar(View anchorView){
-        LayoutInflater inflater = getLayoutInflater(); // Use getLayoutInflater() instead
+        LayoutInflater inflater = getLayoutInflater();
         View popupView = inflater.inflate(R.layout.pop_pago, null);
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
@@ -256,7 +282,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
         });
 
         popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); // To make outside touches work
+        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
     }
 
@@ -270,7 +296,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
                     objRespuesta = response.body();
                     if(objRespuesta != null){
                         resetCart();
-                        mensajeAlert("Compra exitosa " + objRespuesta.getResul_code());
+                        showConfirmation("Compra exitosa", "Resultado de la peiticion: " + objRespuesta.getResul_code());
                     }
                 }
             }

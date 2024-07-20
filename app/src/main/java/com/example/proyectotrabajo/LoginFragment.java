@@ -1,9 +1,11 @@
 package com.example.proyectotrabajo;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -79,6 +82,8 @@ public class LoginFragment extends Fragment {
 
     SignInButton btnGoogle;
     Button btnInvitado;
+    Dialog dialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,7 +148,7 @@ public class LoginFragment extends Fragment {
                             editor.putString("userName", userName);
                             editor.putString("userEmail", userEmail);
                             editor.apply();
-                            mensajeAlert("Bienvenido al sistema \n "+ userName);
+                            mensajeAlert(userName);
 
                         }
                     }
@@ -153,22 +158,38 @@ public class LoginFragment extends Fragment {
     private void reemplazarFragment(Fragment f){
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+        );
         fragmentTransaction.replace(R.id.frame_layout,f);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
     public void mensajeAlert(String msg){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireActivity());
-        alertDialog.setMessage(msg);
-        alertDialog.setCancelable(true);
-        alertDialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        dialog = new Dialog(requireActivity());
+        dialog.setContentView(R.layout.pop_bienvenida);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        TextView txtNombre = dialog.findViewById(R.id.tvUsuarioLogin);
+        Button btnAceptar = dialog.findViewById(R.id.btnLoginAvanzar);
+
+        txtNombre.setText(msg);
+
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 reemplazarFragment(new DulceriaFragment());
-                dialogInterface.dismiss();
+                dialog.dismiss();
             }
         });
-        alertDialog.show();
+
+        dialog.show();
     }
 
     public void mensajeToastShort(String msg){

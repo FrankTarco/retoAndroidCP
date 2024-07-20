@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#A1A1A1">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,16 +16,18 @@
             android:layout_margin="20dp">
 
             <TextView
+                android:id="@+id/tvTitleLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bienvenido a CandyStore"
-                android:padding="10dp"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif-black" />
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 android:src="@drawable/candy_store" />
 
             <TextView

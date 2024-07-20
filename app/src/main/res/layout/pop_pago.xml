@@ -45,6 +45,7 @@
             android:layout_marginRight="20dp"
             android:padding="18dp"
             android:inputType="text"
+            android:maxLength="16"
             android:id="@+id/txtNumeroTarjeta" />
 
         <LinearLayout
@@ -64,6 +65,7 @@
                 android:layout_marginRight="10dp"
                 android:padding="18dp"
                 android:inputType="text"
+                android:maxLength="5"
                 android:id="@+id/txtFechaExpliracion" />
             <EditText
                 android:layout_width="match_parent"
@@ -131,6 +133,7 @@
             android:layout_marginRight="20dp"
             android:padding="18dp"
             android:inputType="text"
+            android:maxLength="8"
             android:id="@+id/txtDocumento" />
         <Button
             android:id="@+id/btnTerminarCompra"

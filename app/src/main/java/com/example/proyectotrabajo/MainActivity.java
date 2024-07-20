@@ -57,7 +57,14 @@ public class MainActivity extends AppCompatActivity {
     private void reemplazarFragment(Fragment f){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+        );
         fragmentTransaction.replace(R.id.frame_layout,f);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

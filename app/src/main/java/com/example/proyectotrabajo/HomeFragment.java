@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment{
                         }
                         imageSlider.setImageList(imageList);
 
+
                         imageSlider.setItemClickListener(new ItemClickListener() {
                             @Override
                             public void onItemSelected(int i) {

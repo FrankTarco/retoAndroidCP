@@ -56,7 +56,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:backgroundTint="#DD014C"
-                    android:text="Finalizar Compra"
+                    android:text="Continuar"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:textStyle="bold" />

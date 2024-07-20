@@ -25,12 +25,16 @@ import android.widget.Toast;
 
 import com.example.proyectotrabajo.adapter.CandyAdapter;
 import com.example.proyectotrabajo.entity.Candy;
+import com.example.proyectotrabajo.entity.Complete;
 import com.example.proyectotrabajo.entity.Items;
+import com.example.proyectotrabajo.entity.Respuesta;
 import com.example.proyectotrabajo.service.CandyStoreService;
+import com.example.proyectotrabajo.service.CompleteService;
 import com.example.proyectotrabajo.util.ConnectionRest;
 import com.example.proyectotrabajo.util.ValidacionUtil;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +46,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     private static final String ARG_PARAM2 = "param2";
 
     private CandyStoreService service;
+    private CompleteService completeService;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -66,6 +71,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         service = ConnectionRest.getConnection().create(CandyStoreService.class);
+        completeService = ConnectionRest.getConnection().create(CompleteService.class);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -77,6 +83,7 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
     Button btnFinalizar;
     RecyclerView recicler;
     TextView total;
+    Respuesta objRespuesta;
 
     double totalAmount = 0.0;
 
@@ -227,7 +234,14 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
                     mensajeAlert("EL DNI debe tener 8 digitos");
                 }
                 else{
-                    mensajeAlert(tipoDoc);
+                    Random random = new Random();
+                    int randomNumber = 100000000 + random.nextInt(900000000);
+                    Complete bean = new Complete();
+                    bean.setName(nombre);
+                    bean.setDni(doc);
+                    bean.setMail(email);
+                    bean.setOperation_date(String.valueOf(randomNumber));
+                    completarRegistro(bean);
                     popupWindow.dismiss();
                 }
 
@@ -244,6 +258,28 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); // To make outside touches work
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
+    }
+
+    private void completarRegistro(Complete obj){
+
+        Call<Respuesta> call = completeService.completarCompra(obj);
+        call.enqueue(new Callback<Respuesta>() {
+            @Override
+            public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
+                if(response.isSuccessful()){
+                    objRespuesta = response.body();
+                    if(objRespuesta != null){
+                        mensajeAlert("Se completo la venta el resultado fue: " + objRespuesta.getResul_code());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Respuesta> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }

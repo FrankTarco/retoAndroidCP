@@ -97,6 +97,7 @@ public class LoginFragment extends Fragment {
         btnInvitado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiarUsuario();
                 reemplazarFragment(new DulceriaFragment());
             }
         });
@@ -144,7 +145,6 @@ public class LoginFragment extends Fragment {
                             editor.apply();
                             mensajeAlert("Bienvenido al sistema \n "+ userName);
 
-                            //reemplazarFragment(new DulceriaFragment());
                         }
                     }
                 });
@@ -174,4 +174,13 @@ public class LoginFragment extends Fragment {
     public void mensajeToastShort(String msg){
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
+
+    private void limpiarUsuario(){
+        FirebaseAuth.getInstance().signOut();
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 }

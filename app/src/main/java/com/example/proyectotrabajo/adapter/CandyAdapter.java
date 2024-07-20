@@ -79,7 +79,6 @@ public class CandyAdapter extends RecyclerView.Adapter<CandyAdapter.ViewHolder> 
                 public void onClick(View view) {
                     if(Integer.parseInt(edtCantidad.getText().toString()) > 0){
                         obj.setQuantity(obj.getQuantity()-1);
-                       // int calcular = Integer.parseInt(edtCantidad.getText().toString()) - 1;
                         edtCantidad.setText(String.valueOf(obj.getQuantity()));
                         if (onQuantityChangeListener != null) {
                             onQuantityChangeListener.onQuantityChanged();
@@ -92,7 +91,6 @@ public class CandyAdapter extends RecyclerView.Adapter<CandyAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     obj.setQuantity(obj.getQuantity()+1);
-                    //int calcular = Integer.parseInt(edtCantidad.getText().toString()) + 1;
                     edtCantidad.setText(String.valueOf(obj.getQuantity()));
                     if (onQuantityChangeListener != null) {
                         onQuantityChangeListener.onQuantityChanged();

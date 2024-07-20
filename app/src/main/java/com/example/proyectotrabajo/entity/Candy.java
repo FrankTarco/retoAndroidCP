@@ -49,4 +49,5 @@ public class Candy {
     public double getTotalPrice(){
         return Double.parseDouble(price) * quantity;
     }
+
 }

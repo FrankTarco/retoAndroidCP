@@ -24,9 +24,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
+                    android:padding="20dp"
                     android:text="Listado de Candystore"
-                    android:textColor="#2e2e2e"
-                    android:textSize="20sp"
+                    android:textColor="#970034"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -35,8 +36,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:text="Total (S/.):"
                     android:textColor="#2e2e2e"
                     android:textSize="20sp"

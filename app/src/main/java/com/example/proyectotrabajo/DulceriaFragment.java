@@ -269,7 +269,8 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
                 if(response.isSuccessful()){
                     objRespuesta = response.body();
                     if(objRespuesta != null){
-                        mensajeAlert("Se completo la venta el resultado fue: " + objRespuesta.getResul_code());
+                        resetCart();
+                        mensajeAlert("Compra exitosa " + objRespuesta.getResul_code());
                     }
                 }
             }
@@ -280,6 +281,19 @@ public class DulceriaFragment extends Fragment implements CandyAdapter.OnQuantit
             }
         });
 
+    }
+
+    private void resetCart() {
+        totalAmount = 0.0;
+        total.setText("Total a pagar: 0.0");
+        if (lista != null && lista.getItems() != null) {
+            for (Candy bean : lista.getItems()) {
+                if (bean != null) {
+                    bean.setQuantity(0);
+                }
+            }
+        }
+        recicler.getAdapter().notifyDataSetChanged();
     }
 
 }
